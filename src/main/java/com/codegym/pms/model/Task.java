@@ -10,8 +10,17 @@ public class Task {
     private Long id;
     private String title;
     private String content;
+    private Boolean status;
 
     public Task() {
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 
     public Long getId() {
