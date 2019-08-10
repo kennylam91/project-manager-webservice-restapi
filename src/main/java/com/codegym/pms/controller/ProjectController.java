@@ -20,6 +20,7 @@ public class ProjectController {
     @Autowired
     private ProjectService projectService;
 
+    //-------------------Retrieve All Projects--------------------------------------------------------
 
     @RequestMapping(value = "/projects", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Project>> listAllProjects() {
@@ -29,4 +30,18 @@ public class ProjectController {
         }
         return new ResponseEntity<List<Project>>(projects, HttpStatus.OK);
     }
+
+    //-------------------Retrieve Single Project--------------------------------------------------------
+
+    @RequestMapping(value = "projects/{id}", method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Project> getProject(@PathVariable("id") Long id){
+        Project project = projectService.findById(id);
+        if(project==null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        else
+            return new ResponseEntity<>(project,HttpStatus.OK);
+    }
+
 }
