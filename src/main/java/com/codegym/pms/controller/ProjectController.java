@@ -22,9 +22,9 @@ public class ProjectController {
 
     //-------------------Retrieve All Projects--------------------------------------------------------
 
-    @RequestMapping(value = "/projects", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/projects", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Project>> listAllProjects() {
-        List<Project> projects = (List<Project>)projectService.findAll();
+        List<Project> projects = (List<Project>) projectService.findAll();
         if (projects.isEmpty()) {
             return new ResponseEntity<List<Project>>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
         }
@@ -34,14 +34,22 @@ public class ProjectController {
     //-------------------Retrieve Single Project--------------------------------------------------------
 
     @RequestMapping(value = "projects/{id}", method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Project> getProject(@PathVariable("id") Long id){
+            produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Project> getProject(@PathVariable("id") Long id) {
         Project project = projectService.findById(id);
-        if(project==null){
+        if (project == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        else
-            return new ResponseEntity<>(project,HttpStatus.OK);
+        } else
+            return new ResponseEntity<>(project, HttpStatus.OK);
     }
 
+    //----------------Create a project----------------------
+    @RequestMapping(value = "projects", method = RequestMethod.POST)
+    public ResponseEntity<Void> createProject(@RequestBody Project project, UriComponentsBuilder uri) {
+        projectService.save(project);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setLocation(uri.path("/projects/{id}").buildAndExpand(project.getId()).toUri());
+        return new ResponseEntity<Void>(httpHeaders, HttpStatus.CREATED);
+
+    }
 }
