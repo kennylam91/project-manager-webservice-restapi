@@ -55,16 +55,26 @@ public class ProjectController {
 
     //-----------------Update a project---------------
     @RequestMapping(value = "projects/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<Project> updateProject(@RequestBody Project project, @PathVariable("id") Long id){
+    public ResponseEntity<Project> updateProject(@RequestBody Project project, @PathVariable("id") Long id) {
         Project currentProject = projectService.findById(id);
-        if(currentProject==null){
+        if (currentProject == null) {
             return new ResponseEntity<Project>(HttpStatus.NOT_FOUND);
-        }
-        else {
+        } else {
             currentProject.setTitle(project.getTitle());
             currentProject.setContent(project.getContent());
             projectService.save(currentProject);
             return new ResponseEntity<Project>(currentProject, HttpStatus.OK);
         }
+    }
+
+    //-------------delete Project----------------
+    @RequestMapping(value = "projects/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<Project> deleteProject(@PathVariable("id") Long id) {
+        Project project = projectService.findById(id);
+        if (project == null) {
+            return new ResponseEntity<Project>(HttpStatus.NOT_FOUND);
+        }
+        projectService.remove(id);
+        return new ResponseEntity<Project>(HttpStatus.NO_CONTENT);
     }
 }
