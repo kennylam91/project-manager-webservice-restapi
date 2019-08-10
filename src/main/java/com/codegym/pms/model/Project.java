@@ -1,5 +1,6 @@
 package com.codegym.pms.model;
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "projects")
@@ -11,6 +12,9 @@ public class Project {
     private String title;
     private String content;
     private Boolean status;
+
+    @OneToMany(targetEntity = Task.class, fetch = FetchType.EAGER)
+    private List<Task> tasks;
 
     public Project() {
     }
@@ -45,6 +49,14 @@ public class Project {
 
     public void setStatus(Boolean status) {
         this.status = status;
+    }
+
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
     }
 }
 

@@ -22,7 +22,8 @@ public class ProjectController {
 
     //-------------------Retrieve All Projects--------------------------------------------------------
 
-    @RequestMapping(value = "/projects", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/projects", method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Project>> listAllProjects() {
         List<Project> projects = (List<Project>) projectService.findAll();
         if (projects.isEmpty()) {

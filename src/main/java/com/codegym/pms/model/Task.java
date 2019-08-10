@@ -12,6 +12,11 @@ public class Task {
     private String content;
     private Boolean status;
 
+    @ManyToOne
+    @JoinColumn(name = "project_id")
+    private Project project;
+
+
     public Task() {
     }
 
@@ -45,5 +50,13 @@ public class Task {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
     }
 }
