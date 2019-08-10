@@ -10,6 +10,7 @@ public class Project {
 
     private String title;
     private String content;
+    private Boolean status;
 
     public Project() {
     }
@@ -36,6 +37,14 @@ public class Project {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 }
 
