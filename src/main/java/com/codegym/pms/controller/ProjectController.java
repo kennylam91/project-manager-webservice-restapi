@@ -52,4 +52,19 @@ public class ProjectController {
         return new ResponseEntity<Void>(httpHeaders, HttpStatus.CREATED);
 
     }
+
+    //-----------------Update a project---------------
+    @RequestMapping(value = "projects/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<Project> updateProject(@RequestBody Project project, @PathVariable("id") Long id){
+        Project currentProject = projectService.findById(id);
+        if(currentProject==null){
+            return new ResponseEntity<Project>(HttpStatus.NOT_FOUND);
+        }
+        else {
+            currentProject.setTitle(project.getTitle());
+            currentProject.setContent(project.getContent());
+            projectService.save(currentProject);
+            return new ResponseEntity<Project>(currentProject, HttpStatus.OK);
+        }
+    }
 }
