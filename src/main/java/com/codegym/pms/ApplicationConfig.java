@@ -2,7 +2,9 @@ package com.codegym.pms;
 
 
 import com.codegym.pms.service.ProjectService;
+import com.codegym.pms.service.TaskService;
 import com.codegym.pms.service.impl.ProjectServiceImpl;
+import com.codegym.pms.service.impl.TaskServiceImpl;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
@@ -41,10 +43,14 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter implements Applic
     }
 
     @Bean
-    public ProjectService projectService(){
+    public ProjectService projectService() {
         return new ProjectServiceImpl();
     }
 
+    @Bean
+    public TaskService taskService() {
+        return new TaskServiceImpl();
+    }
     //JPA configuration
 
     @Bean
@@ -66,17 +72,17 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter implements Applic
     }
 
     @Bean
-    public DataSource dataSource(){
+    public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
         dataSource.setUrl("jdbc:mysql://localhost:3306/projectsms");
-        dataSource.setUsername( "root" );
-        dataSource.setPassword( "123456" );
+        dataSource.setUsername("root");
+        dataSource.setPassword("123456");
         return dataSource;
     }
 
     @Bean
-    public PlatformTransactionManager transactionManager(EntityManagerFactory emf){
+    public PlatformTransactionManager transactionManager(EntityManagerFactory emf) {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(emf);
         return transactionManager;
